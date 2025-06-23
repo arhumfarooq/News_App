@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(height: screenheight * 0.04),
             SpinKitChasingDots(
               color: Colors.blue,
-              size: 40,
+              size: 40, 
             ),
           ],
         ),

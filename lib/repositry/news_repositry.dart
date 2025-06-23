@@ -3,10 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:news_app/model/categories_news_model.dart';
 import 'package:news_app/model/news_channels_headlines_model.dart';
+import 'package:news_app/services/api_endpoints.dart';
 
 class NewsRepositry {
   Future<NewsChannelsHeadlinesModel> fetchNewsChaneelHeadlinesApi(String channel) async {
-    String url = "https://newsapi.org/v2/top-headlines?sources=$channel&apiKey=0fe44c016da44d21b73a3b0611bef81b";
+    String url = ApiEndpoints.headlinesBySource(channel);
     
     final response = await http.get(Uri.parse(url));
 
@@ -19,7 +20,7 @@ class NewsRepositry {
 
 
  Future<CategoriesNewsModel> fetchcategoriesnewsapi(String category) async {
-    String url = "https://newsapi.org/v2/everything?q=${category}&apiKey=0fe44c016da44d21b73a3b0611bef81b";
+    String url = ApiEndpoints.headlinesByCategory(category);
     
     final response = await http.get(Uri.parse(url));
 

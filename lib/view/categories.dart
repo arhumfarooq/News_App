@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:news_app/model/categories_news_model.dart';
+import 'package:news_app/view/category_detailed_screen.dart';
 import 'package:news_app/view/home_Screen.dart';
 import 'package:news_app/view_model/news_view_model.dart';
 
@@ -64,13 +65,14 @@ body: Padding(
         scrollDirection: Axis.horizontal,
         itemCount: Categorieslist.length,
         itemBuilder: (context,index){
-          
+          final name =Categorieslist[index];
   return InkWell(
     
     onTap: () {
-      categoryname= Categorieslist[index];
+
+    
       setState(() {
-        
+        categoryname= name;
       });
     },
     child: Padding(
@@ -119,79 +121,94 @@ Expanded(
                           snapshot.data!.articles![index].publishedAt.toString(),
                         );
   
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: Container(
-decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.85),
-                             
-                                borderRadius: BorderRadius.circular(12)
-                                
-                              ),
+                        return InkWell(
+onTap: () {
 
-                            child: Row(
-                              children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: CachedNetworkImage(
-                                      imageUrl: snapshot.data!.articles![index]
-                                              .urlToImage ??
-                                          "",
-                                      fit: BoxFit.cover,
-                                      width: screenWidth*.18,
-                                      height: screenHeight*.18,
-                                      
-                                      placeholder: (context, url) =>
-                                          Center(child: spinkit2),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error, color: Colors.red),
-                                    
-                                    ),
-                                    
-                                  ),
-                            Expanded(child: Container(
-                              height: screenHeight*.18,
-                              padding: EdgeInsets.only(left: 15),
-                              child: Column(
+Navigator.push(context, MaterialPageRoute(builder: (context)=>CategoryDetailedScreen(newImage: snapshot.data!.articles![index].urlToImage.toString(), 
+newsTitle: snapshot.data!.articles![index].title.toString(), newsDate: snapshot.data!.articles![index].publishedAt.toString(),
+ author: snapshot.data!.articles![index].author.toString(), 
+ description: snapshot.data!.articles![index].description.toString(),
+  content: snapshot.data!.articles![index].content.toString(),
+     source: snapshot.data!.articles![index].source!.name.toString())));
+
+
+
+                              },
+
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: Container(
+                          decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.85),
+                               
+                                  borderRadius: BorderRadius.circular(12)
+                                  
+                                ),
+                          
+                              child: Row(
                                 children: [
-                            Text(snapshot.data!.articles![index].title.toString(),
-                            style: GoogleFonts.poppins(
-                            fontSize: 15,color: Colors.black,
-                            fontWeight: FontWeight.w700
-                            
-                            ),
-                            
-                            ),
-                            Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(snapshot.data!.articles![index].source!.name.toString(),
-                            style: GoogleFonts.poppins(
-                            fontSize: 15,color: Colors.black,
-                            fontWeight: FontWeight.w600
-                            
-                            ),
-                            
-                            ),
-                            Text(format.format(dateTime),
-                            style: GoogleFonts.poppins(
-                            fontSize: 15,color: Colors.black,
-                            fontWeight: FontWeight.w500
-                            
-                            ),
-                            
-                            ),
-                              ],
-                            )
-                            
-                                ],
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: CachedNetworkImage(
+                                        imageUrl: snapshot.data!.articles![index]
+                                                .urlToImage ??
+                                            "",
+                                        fit: BoxFit.cover,
+                                        width: screenWidth*.18,
+                                        height: screenHeight*.18,
+                                        
+                                        placeholder: (context, url) =>
+                                            Center(child: spinkit2),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error, color: Colors.red),
+                                      
+                                      ),
+                                      
+                                    ),
+                              Expanded(child: Container(
+                                height: screenHeight*.18,
+                                padding: EdgeInsets.only(left: 15),
+                                child: Column(
+                                  children: [
+                              Text(snapshot.data!.articles![index].title.toString(),
+                              style: GoogleFonts.poppins(
+                              fontSize: 15,color: Colors.black,
+                              fontWeight: FontWeight.w700
+                              
                               ),
-                            ))
-                            
-                              ],
-                            
-                            
+                              
+                              ),
+                              Spacer(),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(snapshot.data!.articles![index].source!.name.toString(),
+                              style: GoogleFonts.poppins(
+                              fontSize: 15,color: Colors.black,
+                              fontWeight: FontWeight.w600
+                              
+                              ),
+                              
+                              ),
+                              Text(format.format(dateTime),
+                              style: GoogleFonts.poppins(
+                              fontSize: 15,color: Colors.black,
+                              fontWeight: FontWeight.w500
+                              
+                              ),
+                              
+                              ),
+                                ],
+                              )
+                              
+                                  ],
+                                ),
+                              ))
+                              
+                                ],
+                              
+                              
+                              ),
                             ),
                           ),
                         );
